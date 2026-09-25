@@ -2351,6 +2351,7 @@ function ChatThreadPane({
 
 	const composer = (
 		<ChatInputBar
+			sessionId={sessionId}
 			readOnly={isCloudSessionExpired}
 			attachments={attachmentList}
 			environmentId={environmentId}

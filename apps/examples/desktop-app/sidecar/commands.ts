@@ -167,7 +167,7 @@ import {
 	sessionLogPath,
 	sharedSessionDataDir,
 } from "./paths";
-import { getPluginCommandService } from "./plugin-commands";
+import { listPluginCommands } from "./plugin-commands";
 import { getPullRequestStatus } from "./pull-request";
 import { capturePullRequestEvent } from "./pull-request-telemetry";
 import { resolveDesktopRemoteHelper } from "./remote-helper";
@@ -3562,7 +3562,12 @@ export async function handleCommand(
 		// only offers commands that can actually run there.
 		const workspacePath =
 			String(args?.workspacePath ?? "").trim() || ctx.localWorkspaceRoot;
-		return await getPluginCommandService(ctx, workspacePath).listCommands();
+		return await listPluginCommands(
+			ctx,
+			workspacePath,
+			typeof args?.sessionId === "string" ? args.sessionId : undefined,
+			requestedEnvironmentId(args),
+		);
 	}
 	if (command === "list_marketplace_installed_entries") {
 		return listMarketplaceInstalledEntries(
